@@ -1,0 +1,26 @@
+# NovelForge 仓库忽略规则（上传 GitHub 前必看）
+# 运行时生成/含密钥/体积大的内容一律不进仓库
+
+# --- 密钥与运行时配置（.NovelForge_config.yaml 含 api_key，绝对不能上传）---
+.NovelForge_config.yaml
+*_config.yaml
+*.key
+*.pem
+
+# --- 构建产物 ---
+dist/
+build/
+build_mac_venv/
+__pycache__/
+*.pyc
+
+# --- 用户数据（本地小说/日志/文库）---
+novels/
+logs/
+参考文库/
+
+# --- 系统/IDE ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
