@@ -1,0 +1,46 @@
+# ============================================================
+# NovelForge macOS 自动打包（GitHub Actions）
+# 放置位置：把本文件放到仓库 .github/workflows/build-mac.yml
+# 触发：手动运行（Actions 页点 Run workflow），或推送 v* 标签
+# 产物：自动构建 NovelForge.app 并压成 dmg，可在 Actions 页面下载
+# ============================================================
+name: Build macOS app
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  mac:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install PyQt6 requests PyYAML pyinstaller
+
+      - name: Build app
+        run: python -m PyInstaller --noconfirm --clean packaging/mac/NovelForge_mac.spec
+
+      - name: Ad-hoc sign
+        run: codesign --force --deep --sign - dist/NovelForge.app 2>/dev/null || true
+
+      - name: Make DMG
+        run: |
+          hdiutil create -volname "NovelForge" -srcfolder dist/NovelForge.app -ov -format UDZO dist/NovelForge-1.0.0-mac.dmg
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: NovelForge-mac
+          path: dist/NovelForge-1.0.0-mac.dmg
