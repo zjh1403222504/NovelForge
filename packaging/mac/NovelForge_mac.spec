@@ -21,7 +21,7 @@ a = Analysis(
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
-    excludes=[],
+    excludes=['_yaml'],          # _yaml 是 arm64 单架构 C 扩展，排除后 yaml 回退纯 Python（功能一致），否则 universal2 构建失败
     noarchive=False,
     optimize=0,
 )
