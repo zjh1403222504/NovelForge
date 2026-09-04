@@ -5,7 +5,7 @@
 
 import os
 
-SPEC_DIR = os.path.abspath(os.path.dirname(__file__))
+SPEC_DIR = os.path.abspath(SPECPATH)  # PyInstaller 提供 SPECPATH = spec 所在目录
 PROJECT_ROOT = os.path.abspath(os.path.join(SPEC_DIR, "..", ".."))
 
 SRC = os.path.join(PROJECT_ROOT, "NovelForge.py")
