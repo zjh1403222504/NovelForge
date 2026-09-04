@@ -29,6 +29,11 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install PyQt6 requests PyYAML pyinstaller
 
+      - name: Remove non-universal yaml C extension
+        run: |
+          # _yaml 是 arm64 单架构 C 扩展，会阻断 universal2 构建，删除后 yaml 自动回退纯 Python（功能一致）
+          find /Library/Frameworks/Python.framework -name "_yaml*.so" -delete
+
       - name: Build app
         run: python -m PyInstaller --noconfirm --clean packaging/mac/NovelForge_mac.spec
 
