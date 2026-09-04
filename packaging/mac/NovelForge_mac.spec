@@ -40,7 +40,7 @@ exe = EXE(
     console=False,                   # 窗口程序（无控制台）
     disable_windowed_traceback=False,
     argv_emulation=False,
-    target_arch=None,                # 默认跟随本机架构；要通用包可改为 'universal2'
+    target_arch='universal2',            # universal2 = 同时支持 Intel (x86_64) 与 Apple Silicon (arm64)
     codesign_identity=None,          # None = ad-hoc 签名
     entitlements_file=None,
     icon=[ICO],
